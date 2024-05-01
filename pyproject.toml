@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "game-fight-ui"
+version = "1.0.0"
+description = "UI для демонстрации боёв"
+authors = ["Egor Dubrovin <dubrovinen@bmstu.ru>", "Daria Stepanova", "Ilya Reznikov", "Andrey Grishenko", "Sergey Kuznetsov", "Dmitry Radonezky"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.2"
+python-dotenv = "^1.0.1"
+pyyaml = "^6.0.1"
+loguru = "^0.7.2"
+SQLAlchemy = "^2.0.28"
+asyncpg = "^0.29.0"
+fastapi = "^0.110.0"
+uvicorn = "^0.29.0"
+python-multipart = "^0.0.9"
+oic = "^1.6.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

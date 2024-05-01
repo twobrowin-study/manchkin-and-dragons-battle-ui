@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+    <head>
+        <title>🧌 Орда</title>
+        <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+        <script src="js/jquery-3.7.1.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-icons.min.css" rel="stylesheet">
+        <style>
+            #overlay { 
+                display: none; 
+                background: #2d2d2d;
+                width: 100%;
+                height: 500px;
+            };
+        </style> 
+    </head>
+    <body>
+        <div id="overlay" class="z-1 position-absolut text-center align-text-middlee"> 
+            <span id="overlay-text" style="color: white; font-size: 150px; padding-top: 25px;">
+            </span>
+        </div>
+        <h1 class="text-center">🧌 Орда</h1>
+        <hr>
+        <table class="hero-info table table-striped ">
+            <tr>
+                <th class="text-start" colspan="1" style="width: 75px;">🧙🏻‍♂️ Имя</th>
+                <td id="horde_name" class="text-start" colspan="3"></td>
+                <th class="text-end"   colspan="1">📈 Уровень</th>
+                <td id="horde_level" class="text-start" colspan="1"></td>
+            </tr>
+            <tr>
+                <th class="text-end"   colspan="3" style="width: 200px;">❤️ Здоровье</th>
+                <td id="horde_health" class="text-start" colspan="3"></td>
+            </tr>
+            <tr>
+                <th class="text-stat"   colspan="2" style="width: 80px;">⚕️ Телосложение</th>
+                <td id="horde_constitution" class="text-start" colspan="1"  style="width: 175px;"></td>
+                <th class="text-end"   colspan="2">🗡️ Сила</th>
+                <td id="horde_strength" class="text-start" colspan="1"></td>
+            </tr>
+            <tr>
+                <th class="text-stat"   colspan="2" style="width: 75px;">🎯 Ловкость</th>
+                <td id="horde_dexterity" class="text-start" colspan="1"  style="width: 175px;"></td>
+                <th class="text-end"   colspan="2">⭐️ Мудрость</th>
+                <td id="horde_wisdom" class="text-start" colspan="1"></td>
+            </tr>
+        </table>
+
+        <script> 
+            $(() => {
+                setInterval(() => $.ajax({
+                    url:  '/horde',
+                    type: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    success: (data) => {
+                        console.log(data)
+                        if (data.horde_color) {
+                            $("#overlay").css({background: data.horde_color});
+                        }
+                        
+                        if (data.horde_bi) {
+                            $("#overlay").fadeIn("swing");
+                            data.horde_bi.split('\n').forEach((item) => {
+                                $(`<i class="bi bi-${item}"></i>`).appendTo("#overlay-text");
+                            });
+                            setTimeout(() => {
+                                $(".bi").remove();
+                                $("#overlay").fadeOut("swing");
+                            }, 4000); 
+                        }                        
+                        
+                        $('#horde_name')        .text(`${data.horde_name}`);
+                        $('#horde_level')       .text(`${data.horde_level}`);
+                        $('#horde_health')      .text(`${data.horde_health}`);
+                        $('#horde_constitution').text(`${data.horde_constitution}`);
+                        $('#horde_strength')    .text(`${data.horde_strength}`);
+                        $('#horde_dexterity')   .text(`${data.horde_dexterity}`);
+                        $('#horde_wisdom')      .text(`${data.horde_wisdom}`);
+                    }
+                }), 1000)
+            });
+        </script> 
+    </body>
+</html>
